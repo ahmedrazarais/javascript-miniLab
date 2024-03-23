@@ -207,36 +207,41 @@ function remove_Task(task_List){
 
 
 // function to give user choice to update thier task details
-
 function update_Tasks_Details(task_List) {
-    if (task_List.length === 0) { // if no task added yet
+    // Check if the task list is empty
+    if (task_List.length === 0) {
         console.log("Your Task List Is empty. Nothing to update.");
         console.log();
         return;
     } else {
+        // Loop to handle task updates
         while (true) {
-            let task_id = false; // initial it to false
-            show_Tasks(task_List); // call show task function
+            let task_id = false; // Flag to track if task ID is found
+            show_Tasks(task_List); // Display available tasks
             console.log();
+            // Prompt user to enter the ID of the task to be updated
             let get_id = prompt("Enter The Task Id You Want to update (enter 0 to go back):").trim();
-            get_id = parseInt(get_id); // Typecast id to an integer
-            if (get_id === 0) { // if he want to go back
+            get_id = parseInt(get_id);
+            // If user wants to go back, return
+            if (get_id === 0) {
                 console.log("Going To Previous Options..");
                 return;
             }
-            // checking for id match
+            // Check if the entered ID exists in the task list
             for (task of task_List) {
                 if (task.taskid === get_id) {
-                    task_id = true; //if id matches then make it true
+                    task_id = true; // Set flag to true if ID is found
                     break;
                 }
             }
+            // If entered ID does not exist, prompt user again
             if (!task_id) {
                 console.log("Id Not Found. Please Enter valid Id.");
                 console.log();
-                continue; // Prompt the user for ID input again
+                continue;
             }
             console.log("Welcome to update area.");
+            // Loop to handle specific updates for the selected task
             while (true) {
                 console.log("\t1. Update task name:");
                 console.log("\t2. Update Ending Year:");
@@ -244,79 +249,56 @@ function update_Tasks_Details(task_List) {
                 console.log("\t4. Update task status:");
                 console.log("\t5. Exit From Update area:");
                 console.log();
-                //taking user choice
+                // Prompt user to choose an update option
                 let update_Choice = prompt("Please Enter Your Choice In Update area:").trim();
-                // working on respective choices
+                // Handle the chosen update option
                 if (update_Choice === "1") {
                     console.log("Update task name:");
-                    let new_task_name=add_task_name(task_List)    //calling taskname function
-                    
-                    //check if something in return
-                    if (new_task_name){
-                        let index = task_List.findIndex(task => task.taskid === get_id);
-                        if (index !== -1) {
-                            task_List[index].taskname = new_task_name;
-                            console.log("Task name updated successfully.");
-                            
-                    }}
-
+                    // Call function to add/update task name
+                    let new_task_name = add_task_name(task_List);
+                    // Update task name if user input is valid
+                    if (new_task_name) {
+                        task.taskname = new_task_name; // Directly update task name for the matched task
+                        console.log("Task name updated successfully.");
+                    }
                 } else if (update_Choice === "2") {
                     console.log("Update Ending Year:");
-                    let new_year=add_task_date()            //calling ending year function
-                    if (new_year){   //checking that specific obect update
-                        let index = task_List.findIndex(task => task.taskid === get_id)
-                        if (index!==-1){
-                            task_List[index].taskdate = new_year;
-                            console.log("Task Year updated successfully.");
-
-                        }
-
-
+                    // Call function to add/update ending year
+                    let new_year = add_task_date();
+                    // Update ending year if user input is valid
+                    if (new_year) {
+                        task.taskdate = new_year; // Directly update ending year for the matched task
+                        console.log("Task Year updated successfully.");
                     }
-                    
-                    
-
                 } else if (update_Choice === "3") {
                     console.log("Update assignee name:");
-                    let new_assignee=add_task_assignee()         //calling assignee function
-                    if (new_assignee){ //checking that specific obect update
-                        let index = task_List.findIndex(task => task.taskid === get_id)
-                        if (index!==-1){
-                            task_List[index].taskassignee = new_assignee;
-                            console.log("Task Assignee updated successfully.");
-
-                        }
-
-
+                    // Call function to add/update assignee name
+                    let new_assignee = add_task_assignee();
+                    // Update assignee name if user input is valid
+                    if (new_assignee) {
+                        task.taskassignee = new_assignee; // Directly update assignee name for the matched task
+                        console.log("Task Assignee updated successfully.");
                     }
-
                 } else if (update_Choice === "4") {
                     console.log("Update task status:");
-                    let new_status=add_task_status()             //calling status function
-                    if (new_status){ //checking that specific obect update
-                        let index = task_List.findIndex(task => task.taskid === get_id)
-                        if (index!==-1){
-                            task_List[index].taskcompletion = new_status;
-                            console.log("Task Status updated successfully.");
-
-                        }
-
-
+                    // Call function to add/update task status
+                    let new_status = add_task_status();
+                    // Update task status if user input is valid
+                    if (new_status) {
+                        task.taskcompletion = new_status; // Directly update task status for the matched task
+                        console.log("Task Status updated successfully.");
                     }
-
                 } else if (update_Choice === "5") {
                     console.log("Going Back From Update Section..");
                     console.log();
-                    return;   // if he want to exit
-
+                    return;
                 } else {
-                    console.log("Invalid Choice.");   // if not valid input.
+                    console.log("Invalid Choice.");
                 }
             }
         }
     }
 }
-
 
 
 
